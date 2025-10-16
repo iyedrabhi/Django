@@ -27,22 +27,31 @@ class Conference(models.Model):
         return f"{self.name} - {self.theme} ({self.start_date} to {self.end_date})"
     
 
+import uuid
+
 class Submission(models.Model):
-    submission_id=models.CharField(primary_key=True,max_length=50,unique=True)
-    user_id=models.ForeignKey("UserApp.User",on_delete=models.CASCADE,related_name="submissions")
-    conference=models.ForeignKey("ConferenceApp.Conference",on_delete=models.CASCADE,related_name="submissions")
-    title=models.CharField(max_length=50)
-    abstract=models.TextField()
-    keyword=models.TextField()
-    paper = models.FileField(upload_to='sub_paper/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])])    
-    CHOICES=[
-        ("submitted","Submitted"),
-        ("under review","Under review"),
-        ("rejected","Rejected"),
-        ("accepted","Accepted")
+    submission_id = models.CharField(
+        primary_key=True,
+        max_length=50,
+        unique=True,
+        editable=False,
+        default=uuid.uuid4  # ✅ auto-génère un identifiant unique
+    )
+    user_id = models.ForeignKey("UserApp.User", on_delete=models.CASCADE, related_name="submissions")
+    conference = models.ForeignKey("ConferenceApp.Conference", on_delete=models.CASCADE, related_name="submissions")
+    title = models.CharField(max_length=50)
+    abstract = models.TextField()
+    keyword = models.TextField()
+    paper = models.FileField(upload_to='sub_paper/')
+    CHOICES = [
+        ("submitted", "Submitted"),
+        ("under review", "Under review"),
+        ("rejected", "Rejected"),
+        ("accepted", "Accepted"),
     ]
-    status=models.CharField(max_length=50,choices=CHOICES)
-    payed=models.BooleanField(default=False)
-    submission_date=models.DateField(auto_now_add=True)
-    created_at=models.DateTimeField(auto_now_add=True)
-    updated_at=models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=50, choices=CHOICES)
+    payed = models.BooleanField(default=False)
+    submission_date = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
