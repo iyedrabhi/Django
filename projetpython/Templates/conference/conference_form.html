@@ -1,0 +1,6 @@
+<h2>Ajouter une conference</h2>
+<form method="post">
+    {% csrf_token %} <!-- ma8irha matetb3athch el formulaire -->
+    {{form.as_p}}
+    <button type="submit">Enregistrey</button>
+</form>
