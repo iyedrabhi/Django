@@ -1,1 +1,40 @@
-<h1>{{conference.name}}</h1>
+<div class="max-w-3xl mx-auto mt-10 p-8 bg-white rounded-2xl shadow-lg border border-gray-200">
+  
+  <!-- Title -->
+  <h1 class="text-4xl font-bold text-center text-blue-700 mb-6 border-b-4 border-blue-200 pb-3">
+    {{ conference.name }}
+  </h1>
+
+  <!-- Theme -->
+  <p class="text-center text-gray-600 mb-4 italic">
+    Thème :
+    <span class="font-semibold text-gray-800">{{ conference.get_theme_display }}</span>
+  </p>
+
+  <!-- Details Section -->
+  <div class="space-y-4 text-gray-700">
+    <p><span class="font-semibold text-blue-700">📍 Lieu :</span> {{ conference.location }}</p>
+
+    <p><span class="font-semibold text-blue-700">🗓️ Date de début :</span> {{ conference.start_date }}</p>
+    <p><span class="font-semibold text-blue-700">🏁 Date de fin :</span> {{ conference.end_date }}</p>
+
+    <div class="mt-6 bg-gray-50 p-4 rounded-xl border border-gray-200">
+      <h2 class="text-lg font-semibold text-gray-800 mb-2">📝 Description</h2>
+      <p class="leading-relaxed">{{ conference.description }}</p>
+    </div>
+  </div>
+
+  <!-- Metadata -->
+  <div class="flex flex-col sm:flex-row justify-between text-sm text-gray-500 mt-6">
+    <p>📅 Créé le : {{ conference.created_at|date:"d/m/Y H:i" }}</p>
+    <p>🔄 Mis à jour : {{ conference.updated_at|date:"d/m/Y H:i" }}</p>
+  </div>
+
+  <!-- Back button -->
+  <div class="text-center mt-8">
+    <a href="{% url 'conference_liste' %}" 
+       class="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">
+      ← Retour à la liste
+    </a>
+  </div>
+</div>

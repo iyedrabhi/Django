@@ -1,15 +1,35 @@
-<h2>la liste des conferences</h2>
-<table border="1">
-<tr>
-    <td>title</td>
-    <td>location</td>
-    <td>details</td>
-</tr>
-{% for c in liste %}
-<tr>
-    <td>{{c.name}}</td>
-    <td>{{c.location}}</td>
-    <td><a href="{% url 'conference_detail' c.pk %}">details</a></td>
-</tr>
-{% endfor %}
-</table>
+<h2 class="text-3xl font-bold text-center text-blue-700 mb-6">
+  📅 La liste des conférences
+</h2>
+
+<div class="overflow-x-auto">
+  <table class="min-w-full border border-gray-300 rounded-xl shadow-md">
+    <thead class="bg-blue-600 text-white">
+      <tr>
+        <th class="py-3 px-4 text-left">Titre</th>
+        <th class="py-3 px-4 text-left">Lieu</th>
+        <th class="py-3 px-4 text-center">Détails</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      {% for c in liste %}
+      <tr class="hover:bg-blue-50 transition">
+        <td class="py-3 px-4 font-medium text-gray-800">{{ c.name }}</td>
+        <td class="py-3 px-4 text-gray-700">{{ c.location }}</td>
+        <td class="py-3 px-4 text-center">
+          <a href="{% url 'conference_detail' c.pk %}"
+             class="inline-block bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition">
+            Voir détails
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3" class="text-center py-4 text-gray-500">
+          Aucune conférence trouvée.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
