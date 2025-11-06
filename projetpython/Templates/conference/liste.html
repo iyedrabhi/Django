@@ -26,6 +26,7 @@
             Voir détails
           </a>
         </td>
+        {% if user.is_authenticated and user.role == "commitee" %}
         <td class="py-3 px-4 text-center">
           <a href="{% url 'conference_update' c.pk %}"
              class="inline-block bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition">
@@ -38,6 +39,7 @@
             Delete
           </a>
         </td>
+        {% endif %}
       </tr>
       {% empty %}
       <tr>

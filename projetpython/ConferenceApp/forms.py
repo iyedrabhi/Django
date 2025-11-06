@@ -1,6 +1,6 @@
 from django import forms
 from .models import Conference
-class ConferenceModel(forms.ModelForm):
+class ConferenceModel(forms.ModelForm): #
     class Meta:
         model=Conference
         fields=['name','theme','description','location','start_date','end_date']
