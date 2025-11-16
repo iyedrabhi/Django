@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="text-3xl font-bold text-center text-blue-700 mb-6">
+  📄 La liste des soumissions
+</h2>
+
+<div class="overflow-x-auto">
+  <table class="min-w-full border border-gray-300 rounded-xl shadow-md">
+    <thead class="bg-blue-600 text-white">
+      <tr>
+        <th class="py-3 px-4 text-left">Titre</th>
+        <th class="py-3 px-4 text-left">Conférence</th>
+        <th class="py-3 px-4 text-left">Auteur</th>
+        <th class="py-3 px-4 text-center">Détails</th>
+        {% if user.is_authenticated and user.role == "commitee" %}
+          <th class="py-3 px-4 text-center">Modifier</th>
+          <th class="py-3 px-4 text-center">Supprimer</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      {% for s in submissions %}
+      <tr class="hover:bg-blue-50 transition">
+        <td class="py-3 px-4 font-medium text-gray-800">{{ s.title }}</td>
+        <td class="py-3 px-4 text-gray-700">{{ s.conference.name }}</td>
+        <td class="py-3 px-4 text-gray-700">{{ s.user_id.username }}</td>
+
+        <td class="py-3 px-4 text-center">
+          <a href="{% url 'submission_detail' s.pk %}"
+             class="inline-block bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition">
+            Voir détails
+          </a>
+        </td>
+
+        {% if user.is_authenticated and user.role == "commitee" %}
+        <td class="py-3 px-4 text-center">
+          <a href="{% url 'submission_update' s.pk %}"
+             class="inline-block bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition">
+            Modifier
+          </a>
+        </td>
+        <td class="py-3 px-4 text-center">
+          <a href="{% url 'submission_delete' s.pk %}"
+             class="inline-block bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition">
+            Supprimer
+          </a>
+        </td>
+        {% endif %}
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="text-center py-4 text-gray-500">
+          Aucune soumission trouvée.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

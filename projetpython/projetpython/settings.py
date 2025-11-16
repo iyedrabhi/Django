@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework', #####
     'UserApp', ################Tzid asemi lapplicationet lo5rin
     'ConferenceApp',################
     'SessionApp',##################
+    'SessionAppApi', ######
+
 ]
 
 MIDDLEWARE = [
