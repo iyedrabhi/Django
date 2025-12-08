@@ -1,8 +1,12 @@
 import os
+import sys
 import django
 from mcp.server.fastmcp import FastMCP
 from asgiref.sync import sync_to_async
 from datetime import datetime
+
+# Add project path to sys.path for imports
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # Configure Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'projetpython.settings')
