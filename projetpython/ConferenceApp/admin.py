@@ -1,13 +1,13 @@
 from django.contrib import admin
-from .models import Submission, Conference
+from .models import Conference, Submission
 
 
 # -----------------------------
 # 🔧 Personnalisation de l'interface globale
 # -----------------------------
-admin.site.site_header = "CONFÉRENCE MANAGEMENT ADMIN 25/26"
+admin.site.site_header = "Conference MANAGEMENT ADMIN 25/26"
 admin.site.index_title = "Gestion des conférences"
-admin.site.site_title = "Admin Conférences"
+admin.site.site_title = "Admin conférences"
 
 
 # -----------------------------
@@ -16,7 +16,7 @@ admin.site.site_title = "Admin Conférences"
 @admin.register(Conference)
 class ConferenceAdmin(admin.ModelAdmin):
     # a. Colonnes affichées
-    list_display = ("name", "theme", "location", "start_date", "end_date", "duration")
+    list_display = ("name", "theme", "location", "start_date", "end_date")
 
     # g. Tri
     ordering = ("start_date",)
@@ -57,17 +57,18 @@ class ConferenceAdmin(admin.ModelAdmin):
 @admin.action(description="Marquer comme payé")
 def mark_as_payed(modeladmin, request, queryset):
     queryset.update(payed=True)
-@admin.action
-def mark_as_accepted(m,req,q):
+
+@admin.action(description="Marquer comme accepté")
+def mark_as_accepted(m, req, q):
     q.update(status="accepted")
 
 @admin.register(Submission)
 class SubmissionAdmin(admin.ModelAdmin):
     # a. Colonnes
-    list_display = ("title", "status", "user_id", "conference", "submission_date", "payed")
+    list_display = ("title", "status", "user_id", "conference", "created_at", "payed")
 
     # d. Filtres
-    list_filter = ("status", "payed", "conference", "submission_date")
+    list_filter = ("status", "payed", "conference", "created_at")
 
     # e. Recherche
     search_fields = ("title", "keyword", "user_id__username")
@@ -84,12 +85,12 @@ class SubmissionAdmin(admin.ModelAdmin):
             "fields": ("paper", "conference"),
         }),
         ("Suivi", {
-            "fields": ("status", "payed", "submission_date", "user_id"),
+            "fields": ("status", "payed", "created_at", "user_id"),
         }),
     )
 
     # h. Lecture seule
-    readonly_fields = ("submission_id", "submission_date")
+    readonly_fields = ("submission_id", "created_at")
 
     # Action personnalisée
-    actions = [mark_as_payed,mark_as_accepted]
+    actions = [mark_as_payed, mark_as_accepted]
